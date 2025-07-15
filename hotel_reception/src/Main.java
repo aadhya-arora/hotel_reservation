@@ -36,6 +36,31 @@ public class Main {
     }
     public static void view(Connection connection,Scanner sc)
     {
+        try {
+            System.out.print("Enter the unique id:");
+            int id=sc.nextInt();
+            String query="Select * from reservations where reservation_id=?";
+            PreparedStatement pstat=connection.prepareStatement(query);
+            pstat.setInt(1, id);
+            ResultSet rSet=pstat.executeQuery();
+            if(rSet.next())
+            {
+                int reservation_id=rSet.getInt("reservation_id");
+                String guest_name=rSet.getString("guest_name");
+                int room_number=rSet.getInt("room_number");
+                String contact_number=rSet.getString("contact_number");
+                System.out.println("Reservation Id:"+reservation_id);
+                System.out.println("Guest name:"+guest_name);
+                System.out.println("Room Number:"+room_number);
+                System.out.println("Contact Number:"+contact_number);
+            }
+            else
+            {
+                System.out.println("No such booking");
+            }
+        } catch (Exception e) {
+           System.out.println(e.getMessage());
+        }
 
     }
     public static void get(Connection connection,Scanner sc)
