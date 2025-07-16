@@ -65,7 +65,25 @@ public class Main {
     }
     public static void get(Connection connection,Scanner sc)
     {
-
+        try {
+            System.out.println("Enter the Reservation ID");
+            int id=sc.nextInt();
+            String query="Select * from reservations where reservation_id=?";
+            PreparedStatement pstat=connection.prepareStatement(query);
+            pstat.setInt(1, id);
+            ResultSet rset=pstat.executeQuery();
+            if(rset.next())
+            {
+                int room_number=rset.getInt("room_number");
+                System.out.println("Room Number:"+room_number);
+            }
+            else
+            {
+                System.out.println("Not booked yet");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public static void update(Connection connection,Scanner sc)
     {
@@ -73,7 +91,25 @@ public class Main {
     }
     public static void delete(Connection connection,Scanner sc)
     {
-
+        try {
+            System.out.println("Which booking do you want to delete:");
+            int id=sc.nextInt();
+            String query="Delete from reservations where reservation_id=?";
+            PreparedStatement pstat=connection.prepareStatement(query);
+            pstat.setInt(1, id);
+            int rset=pstat.executeUpdate();
+            if(rset>0)
+            {
+                System.out.println("Booking successfully deleted");
+            }
+            else
+            {
+                System.out.println("No such reservation");
+            }
+            
+        } catch (Exception e) {
+           System.out.println(e.getMessage());
+        }
     }
     public static void exit()
     {
