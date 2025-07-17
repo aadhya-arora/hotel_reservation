@@ -5,6 +5,39 @@ public class Main {
     public static final String username="root";
     public static final String password="aadhya";
 
+    public static void updateName(Connection connection,Scanner sc)
+    {
+        try {
+            System.out.println("Enter the guest id:");
+            int id=sc.nextInt();
+            System.out.println("Updated name:");
+            String name=sc.next();
+            String query="Update reservations set guest_name=? where reservation_id=?";
+            PreparedStatement pstat=connection.prepareStatement(query);
+            pstat.setString(1, name);
+            pstat.setInt(2, id);
+            int rowsAffected=pstat.executeUpdate();
+            if(rowsAffected>0)
+            {
+                System.out.println("Guest Name successfully updated");
+            }
+            else
+            {
+                System.out.println("Guest name not updated");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public static void updateRoom(Connection connection,Scanner sc)
+    {
+
+    }
+    public static void updateContact(Connection connection,Scanner sc)
+    {
+
+    }
+
     public static void reserve(Connection connection,Scanner sc)
     {
         try{
@@ -87,7 +120,26 @@ public class Main {
     }
     public static void update(Connection connection,Scanner sc)
     {
-
+        System.out.println("----------------------------------");
+        System.out.println(" What Info do you want to update? ");
+        System.out.println("----------------------------------");
+        System.out.println("1.Guest name");
+        System.out.println("2.Room number");
+        System.out.println("3.Contact info");
+        int choice=sc.nextInt();
+        switch (choice) {
+            case 1:
+                updateName(connection,sc);
+                break;
+            case 2:
+                updateRoom(connection,sc);
+                break;
+            case 3:
+                updateContact(connection,sc);
+                break;
+            default:
+                break;
+        }
     }
     public static void delete(Connection connection,Scanner sc)
     {
@@ -129,6 +181,7 @@ public class Main {
             Connection connection=DriverManager.getConnection(url, username, password);
             while(true)
             {
+                System.out.println("---------------------------");
                 System.out.println("  Hotel Management System  ");
                 System.out.println("---------------------------");
                 System.out.println("Choose an option");
