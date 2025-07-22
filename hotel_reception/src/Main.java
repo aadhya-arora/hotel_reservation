@@ -31,7 +31,30 @@ public class Main {
     }
     public static void updateRoom(Connection connection,Scanner sc)
     {
-
+        try
+        {
+            System.out.println("Enter the guest id:");
+            int id=sc.nextInt();
+            System.out.println("Update room to:");
+            int room_number=sc.nextInt();
+            String query="Update reservations set room_number=? where reservation_id=?";
+            PreparedStatement pstat=connection.prepareStatement(query);
+            pstat.setInt(1, room_number);
+            pstat.setInt(2, id);
+            int rowsAffected=pstat.executeUpdate();
+            if(rowsAffected>0)
+            {
+                System.out.println("Room number updated successfully");
+            }
+            else
+            {
+                System.out.println("Room number not updated successfully");
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     public static void updateContact(Connection connection,Scanner sc)
     {
