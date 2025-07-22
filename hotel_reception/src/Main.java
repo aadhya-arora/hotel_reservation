@@ -58,7 +58,27 @@ public class Main {
     }
     public static void updateContact(Connection connection,Scanner sc)
     {
-
+        try {
+            System.out.println("Enter the guest id:");
+            int id=sc.nextInt();
+            System.out.println("Updated Contact No:");
+            String contact=sc.next();
+            String query="Update reservations set contact_number=? where reservation_id=?";
+            PreparedStatement pstat=connection.prepareStatement(query);
+            pstat.setInt(2,id);
+            pstat.setString(1, contact);
+            int rowsAffected=pstat.executeUpdate();
+            if(rowsAffected>0)
+            {
+                System.out.println("Contact Info successfully updated");
+            }
+            else
+            {
+                System.out.println("There is an issue updating the contact info");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void reserve(Connection connection,Scanner sc)
