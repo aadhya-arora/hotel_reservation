@@ -1,7 +1,5 @@
 import java.sql.*;
 import java.util.Scanner;
-
-import javax.naming.spi.DirStateFactory.Result;
 public class Main {
     public static final String url="jdbc:mysql://localhost:3306/hotel_db";
     public static final String username="root";
@@ -21,6 +19,15 @@ public class Main {
             int rowsAffected=pstat.executeUpdate();
             if(rowsAffected>0)
             {
+                int i=5;
+                
+                    System.out.print("Updating");
+                while(i!=0)
+                {
+                    System.out.print("..");
+                    Thread.sleep(450);
+                    i--;
+                }
                 System.out.println("Guest Name successfully updated");
             }
             else
@@ -46,6 +53,15 @@ public class Main {
             int rowsAffected=pstat.executeUpdate();
             if(rowsAffected>0)
             {
+                 int i=5;
+                
+                    System.out.print("Updating");
+                while(i!=0)
+                {
+                    System.out.print("..");
+                    Thread.sleep(450);
+                    i--;
+                }
                 System.out.println("Room number updated successfully");
             }
             else
@@ -72,6 +88,15 @@ public class Main {
             int rowsAffected=pstat.executeUpdate();
             if(rowsAffected>0)
             {
+                 int i=5;
+                
+                    System.out.print("Updating");
+                while(i!=0)
+                {
+                    System.out.print("..");
+                    Thread.sleep(450);
+                    i--;
+                }
                 System.out.println("Contact Info successfully updated");
             }
             else
@@ -100,6 +125,15 @@ public class Main {
             int rowsAffected=pstat.executeUpdate();
             if(rowsAffected>0)
             {
+                 int i=5;
+                
+                    System.out.print("Reserving");
+                while(i!=0)
+                {
+                    System.out.print("..");
+                    Thread.sleep(450);
+                    i--;
+                }
                 System.out.println("Reservation confirmed");
             }
             else{
@@ -121,6 +155,15 @@ public class Main {
             PreparedStatement pstat=connection.prepareStatement(query);
             pstat.setInt(1, id);
             ResultSet rSet=pstat.executeQuery();
+            int i=5;
+                
+                    System.out.print("Fetching");
+                while(i!=0)
+                {
+                    System.out.print("..");
+                    Thread.sleep(450);
+                    i--;
+                }
             if(rSet.next())
             {
                 int reservation_id=rSet.getInt("reservation_id");
@@ -150,6 +193,15 @@ public class Main {
             PreparedStatement pstat=connection.prepareStatement(query);
             pstat.setInt(1, id);
             ResultSet rset=pstat.executeQuery();
+             int i=5;
+                
+                    System.out.print("Fetching");
+                while(i!=0)
+                {
+                    System.out.print("..");
+                    Thread.sleep(450);
+                    i--;
+                }
             if(rset.next())
             {
                 int room_number=rset.getInt("room_number");
@@ -197,6 +249,15 @@ public class Main {
             int rset=pstat.executeUpdate();
             if(rset>0)
             {
+                 int i=5;
+                
+                    System.out.print("Deleting");
+                while(i!=0)
+                {
+                    System.out.print("..");
+                    Thread.sleep(450);
+                    i--;
+                }
                 System.out.println("Booking successfully deleted");
             }
             else
