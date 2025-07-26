@@ -1,5 +1,7 @@
 import java.sql.*;
 import java.util.Scanner;
+
+import javax.naming.spi.DirStateFactory.Result;
 public class Main {
     public static final String url="jdbc:mysql://localhost:3306/hotel_db";
     public static final String username="root";
@@ -203,12 +205,54 @@ public class Main {
             }
             
         } catch (Exception e) {
-           System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
-    public static void exit()
+    public static void viewall(Connection connection,Scanner sc) throws InterruptedException
     {
-
+        System.out.println("Displaying all reservations");
+            int i=5;
+            while(i!=0)
+            {
+                System.out.print(".");
+                Thread.sleep(450);
+                i--;
+            }
+        try{
+            String query="Select reservation_id,guest_name,room_number,contact_number,reservation_date from reservations";
+            PreparedStatement pstat=connection.prepareStatement(query);
+            System.out.println("*----------------*------------*-------------*----------------*--------------------*");
+            System.out.println("| Reservation Id | Guest Name | Room Number | Contact Number |     Reservation Date    |");
+            System.out.println("*----------------*------------*-------------*----------------*-------------------------*");
+            ResultSet rSet=pstat.executeQuery();
+            while(rSet.next())
+            {
+                int id=rSet.getInt("reservation_id");
+                String guest_name=rSet.getString("guest_name");
+                int room_number=rSet.getInt("room_number");
+                String contact_number=rSet.getString("contact_number");
+                String date=rSet.getTimestamp("reservation_date").toString();
+                System.out.println("|        "+id+"       |   "+guest_name+"   |    "+room_number+"      |   "+contact_number+"   |  "+date+"  |");
+            }
+            System.out.println("*----------------*------------*-------------*----------------*-------------------------*");
+            
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+    public static void exit() throws InterruptedException
+    {
+        System.out.println("Exiting System");
+        int i=5;
+        while(i!=0)
+        {
+            System.out.print(".");
+            Thread.sleep(450);
+            i--;
+        }
+        System.out.println("Thank you for using the Hotel resrvation Software!!!");
     }
     public static void main(String[] args) {
         try{
@@ -229,10 +273,11 @@ public class Main {
                 System.out.println("---------------------------");
                 System.out.println("Choose an option");
                 System.out.println("1.Reserve a room");
-                System.out.println("2.View reservations");
-                System.out.println("3.Get room number");
-                System.out.println("4.Update reservations");
-                System.out.println("5.Delete reservations");
+                System.out.println("2.View selected reservations");
+                System.out.println("3.View all reservations");
+                System.out.println("4.Get room number");
+                System.out.println("5.Update reservations");
+                System.out.println("6.Delete reservations");
                 System.out.println("0.Exit");
                 System.out.println("Your choice -");
                 Scanner sc=new Scanner(System.in);
@@ -246,16 +291,32 @@ public class Main {
                     view(connection,sc);
                     break;
                     case 3:
-                    get(connection,sc);
+                    try{
+                        viewall(connection,sc);
+                    }
+                    catch(Exception e)
+                    {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                     case 4:
-                    update(connection , sc);
+                    get(connection,sc);
                     break;
                     case 5:
+                    update(connection , sc);
+                    break;
+                    case 6:
                     delete(connection,sc);
                     break;
                     case 0:
-                    exit();
+                    try
+                    {
+                        exit();
+                    }
+                    catch(InterruptedException e)
+                    {
+                        System.out.println(e.getMessage());
+                    }
                     sc.close();
                     return;
                     default:
